@@ -10,7 +10,9 @@ const Nav = () => {
       <Link to='/register' className='p-2 bg-green-500 text-white m-2 rounded-sm'>Register</Link>
       <Link to='/login' className='p-2 bg-green-500 text-white m-2 rounded-sm'>Login</Link>
       <Link to='/dashboard' className='p-2 bg-green-500 text-white m-2 rounded-sm'>Dashboard</Link>
-      <Link to='/user-dashboard' className='p-2 bg-green-500 text-white m-2 rounded-sm'>User Dashboard</Link>
+      <Link to='/user-dashboard' className='p-2 bg-green-500 text-white m-2 rounded-sm'>User Dashboard</Link> <br/>
+      <br/> <Link to='/product' className='p-2 bg-green-500 text-white m-2 rounded-sm'>product</Link>
+
 
 
     </div>

@@ -9,6 +9,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+
 app.use('/uploads', express.static('uploads')); // Serve static files from the 'uploads' directory
 
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -27,6 +28,9 @@ app.use(cors({
 app.use('/api/user/', require('./routes/userRoute'));
 
 app.use('/api/users', require('./routes/userrou'));
+
+app.use("/api/user", require("./routes/productRoute"));
+
 
 
 const startServer = async () => {

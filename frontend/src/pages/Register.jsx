@@ -1,84 +1,80 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Buttons from "./component/Buttons";
-import { createUserApi } from "../api/Api";
+import { createProductApi } from "../api/Api";
 
-function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmpassword] = useState("");
+function AddProduct() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !confirmpassword) {
+    if (!title || !description || !price || !category) {
       return toast.error("Please fill in all fields");
     }
 
-    if (password !== confirmpassword) {
-      return toast.error("Passwords do not match");
-    }
+    try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("category", category);
 
-    toast.success(`Thanks for registering, ${name}!`);
- 
+      const response = await createProductApi(formData);
 
-  try {
-    const formData = new FormData();
-    formData.append('username', name);
-    formData.append('email', email);
-    formData.append('password', password);
-    const response = await createUserApi(formData);
-    if (response.data.success){
-      return toast.success(response.data.message)
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (err) {
+      console.error("Error creating product:", err);
+      toast.error("Something went wrong while creating the product.");
     }
-    return toast.error(response.data.message)
-  } catch (err) {
-    console.error("Error creating user:", err)
-  }
-   };
+  };
 
   return (
     <div className="p-5">
       <form onSubmit={submit} className="mt-10 bg-gray-300 p-5 rounded-lg space-y-3">
         <input
           type="text"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
+          name="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Product Title"
+          className="block w-full p-2 rounded"
+        />
+        <textarea
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
           className="block w-full p-2 rounded"
         />
         <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+          type="number"
+          name="price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeholder="Price"
           className="block w-full p-2 rounded"
         />
         <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="block w-full p-2 rounded"
-        />
-        <input
-          type="password"
-          name="confirmpassword"
-          value={confirmpassword}
-          onChange={(e) => setConfirmpassword(e.target.value)}
-          placeholder="Confirm Password"
+          type="text"
+          name="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          placeholder="Category"
           className="block w-full p-2 rounded"
         />
 
-        {/* Custom button component */}
-        <Buttons label="Register" onClick={submit} />
+        <Buttons label="Add Product" onClick={submit} />
       </form>
     </div>
   );
 }
 
-export default Register;
+export default AddProduct;

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { data } from 'react-router';
 
+
+
 const ApiFormData = axios.create({
   baseURL: 'http://localhost:5005',
   withCredentials: true,
@@ -21,3 +23,5 @@ const Api = axios.create({
 
 export const createUserApi = (data) => ApiFormData.post("/api/user/createUser", data);
 export const loginUserApi = (data) => Api.post("/api/user/login", data);
+export const createProductApi = (data) => Api.post("/api/user/create", data);
+export const getAllProductsApi = () => Api.get("/api/user/getall");
